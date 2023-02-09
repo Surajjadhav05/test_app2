@@ -7,9 +7,9 @@ st.title("Streamlit test Web app")
 uploaded_file=st.file_uploader("Please upload account file here", type=["csv","excel"])
 
 if uploaded_file is not None:
-    df=pd.read_csv(uploaded_file)
+    df_s=pd.read_csv(uploaded_file)
     st.header("Uploaded File")
-    st.dataframe(df)
+    st.dataframe(df_s)
 else:
     st.header("Please Upload file to fetch data")
   
@@ -24,15 +24,11 @@ authToken = authToken[0]
 
 
 if uploaded_file is not None:
-    df=pd.read_csv(uploaded_file)
-    st.header("Uploaded File")
-    st.dataframe(df)
-    
-    account_nos=df.account_no.unique().tolist()
+    account_nos=df_s.account_no.unique().tolist()
 
     bob = conn.runInstalledQuery(queryName = "output_ids",params={"ids":account_nos})
 
-    df=pd.DataFrame(columns=["acc_no","hops","cid","opened"])
+    df=pd.DataFrame(columns=["acc_no","hops","cid","account_opened_date"])
     acc_no=[]
     hops=[]
     cid=[]
