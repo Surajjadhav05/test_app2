@@ -21,7 +21,7 @@ if uploaded_file is not None:
     
     account_nos=df.account_no.unique().tolist()
 
-    bob = conn.runInstalledQuery(queryName = "output_ids" params={"ids":account_nos})
+    bob = conn.runInstalledQuery(queryName = "output_ids",params={"ids":account_nos})
 
     df=pd.DataFrame(columns=["acc_no","hops","cid","in_giant_component"])
     acc_no=[]
