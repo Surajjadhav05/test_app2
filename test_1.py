@@ -2,17 +2,26 @@ import pandas as pd
 import streamlit as st
 import pyTigerGraph as tg
 
+st.title("Streamlit test Web app")
+
+uploaded_file=st.file_uploader("Please upload account file here", type=["csv","excel"])
+
+if uploaded_file is not None:
+    df=pd.read_csv(uploaded_file)
+    st.header("Uploaded File")
+    st.dataframe(df)
+else:
+    st.header("Please Upload file to fetch data")
+  
+  
 Domain = "https://fraud-demo.i.tgcloud.io"
 Graph = "Fraud"
 Secret = "o98ha1r06p1rh5t1uhqkak9svsikof0p"
 conn = tg.TigerGraphConnection(host=Domain, graphname=Graph, gsqlSecret=Secret)
- 
+
 authToken = conn.getToken(Secret)
 authToken = authToken[0]
 
-st.title("Streamlit test Web app")
-
-uploaded_file=st.file_uploader("Please upload account file here", type=["csv","excel"])
 
 if uploaded_file is not None:
     df=pd.read_csv(uploaded_file)
@@ -23,7 +32,7 @@ if uploaded_file is not None:
 
     bob = conn.runInstalledQuery(queryName = "output_ids",params={"ids":account_nos})
 
-    df=pd.DataFrame(columns=["acc_no","hops","cid","in_giant_component"])
+    df=pd.DataFrame(columns=["acc_no","hops","cid","opened"])
     acc_no=[]
     hops=[]
     cid=[]
@@ -46,5 +55,4 @@ if uploaded_file is not None:
     st.header("Account Details")
     st.dataframe(df)
 
-else:
-    st.header("Please Upload file to fetch data")
+
